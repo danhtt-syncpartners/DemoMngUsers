@@ -1,0 +1,75 @@
+﻿@* @inject IHtmlLocalizer<SharedResources> Localizer *@
+@inject IViewLocalizer Localizer
+@using System.Globalization
+@model List<UserListViewModel>
+
+@{
+    var culture = CultureInfo.CurrentUICulture.Name;
+    var dataTablesLanguageUrl = culture switch
+    {
+        "ja-JP" => "//cdn.datatables.net/plug-ins/2.0.8/i18n/ja.json",
+        _ => "//cdn.datatables.net/plug-ins/2.0.8/i18n/en-GB.json"
+    };
+}
+
+<h2>@Localizer["UserList"]</h2>
+<div>
+    <table class="display" id="userTabel">
+        <thead>
+            <tr>
+                <th>@Localizer["FirstName"]</th>
+                <th>@Localizer["LastName"]</th>
+                <th>@Localizer["DateOfBirth"]</th>
+                <th>@Localizer["Address"]</th>
+                <th>@Localizer["City"]</th>
+                <th>@Localizer["Country"]</th>
+                <th>@Localizer["PhoneNumber"]</th>
+                <th>@Localizer["Gender"]</th>
+                <th>@Localizer["Email"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@(user.DateOfBirth.HasValue ? user.DateOfBirth.Value.ToString("yyyy/MM/dd") : "")</td>
+                    <td>@user.Address</td>
+                    <td>@user.City</td>
+                    <td>@user.Country</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>
+                        @{
+                            string genderText = "";
+                            var localizedFemale = Localizer["GenderFemale"];
+                            var localizedMale = Localizer["GenderMale"];
+                            var localizedOthers = Localizer["GenderOthers"];
+                            if (user.Gender == "F") 
+                            {
+                                genderText = localizedFemale.Value;
+                            }
+                            else if (user.Gender == "M")
+                            {
+                                genderText = localizedMale.Value;
+                            }
+                            else if (String.IsNullOrEmpty(user.Gender))
+                            {
+                                genderText = "";
+                            }
+                            else
+                            {
+                                genderText = localizedOthers.Value;
+                            }
+                        }
+                        @genderText
+                    </td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    var dataTablesLanguageUrl = '@dataTablesLanguageUrl'
+</script>

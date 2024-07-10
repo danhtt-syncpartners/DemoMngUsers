@@ -1,0 +1,18 @@
+﻿@model DemoMngUsers.Models.UserInfoViewModel
+
+<h2>User Information</h2>
+
+<div>
+    <p><strong>Username:</strong> @Model.UserName</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>First Name:</strong> @Model.FirstName</p>
+    <p><strong>Last Name:</strong> @Model.LastName</p>
+    <p><strong>Date of Birth:</strong> @Model.DateOfBirth</p>
+    <p><strong>Address:</strong> @Model.Address</p>
+    <p><strong>Country:</strong> @Model.Country</p>
+    <p><strong>Gender:</strong> @Model.Gender</p>
+</div>
+
+<div>
+    <a class="btn btn-outline-primary" role="button" aria-pressed="true" asp-area="" asp-controller="User" asp-action="UpdateUser">Update Information</a>
+</div>
